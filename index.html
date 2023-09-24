@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        .date-flip {
+            display: flex;
+            align-items: center;
+        }
+
+        .date-segment {
+            font-size: 2rem;
+            padding: 10px;
+            background-color: #333;
+            color: #fff;
+            margin: 0 5px;
+            border-radius: 5px;
+            transform: rotateX(0deg);
+            transition: transform 0.5s;
+        }
+    </style>
+    <title>Date and Time Flip</title>
+</head>
+<body>
+    <div class="date-flip" id="dateFlip">
+        <div class="date-segment" id="dateSegment">01 JAN 2023</div>
+        <div class="date-segment" id="timeSegment">12:00:00</div>
+    </div>
+
+    <script>
+        const dateFlip = document.getElementById('dateFlip');
+        const dateSegment = document.getElementById('dateSegment');
+        const timeSegment = document.getElementById('timeSegment');
+
+        function updateDateAndTime() {
+            const currentDate = new Date();
+            const day = String(currentDate.getDate()).padStart(2, '0');
+            const month = new Intl.DateTimeFormat('en', { month: 'short' }).format(currentDate);
+            const year = currentDate.getFullYear();
+            const timeString = currentDate.toLocaleTimeString();
+
+            const dateString = `${day} ${month.toUpperCase()} ${year}`;
+
+            dateSegment.textContent = dateString;
+            timeSegment.textContent = timeString;
+
+            // Trigger flip animation
+            dateFlip.style.transform = 'rotateX(90deg)';
+            setTimeout(() => {
+                dateFlip.style.transform = 'rotateX(0deg)';
+            }, 500);
+        }
+
+        // Update the date and time every second
+        setInterval(updateDateAndTime, 1000);
+
+        // Initial update
+        updateDateAndTime();
+    </script>
+</body>
+</html>
